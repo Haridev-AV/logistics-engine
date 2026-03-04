@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    container_name: route-optima-db
+    environment:
+      POSTGRES_DB: route_optima
+      POSTGRES_USER: harid
+      POSTGRES_PASSWORD: 4094
+    ports:
+      - "5433:5432"
