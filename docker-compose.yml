@@ -5,7 +5,7 @@ services:
     container_name: route-optima-db
     environment:
       POSTGRES_DB: route_optima
-      POSTGRES_USER: harid
-      POSTGRES_PASSWORD: 4094
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5433:5432"
