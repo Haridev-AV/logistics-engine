@@ -4,6 +4,8 @@ import com.routeoptima.logistics_engine.model.Shipment;
 import com.routeoptima.logistics_engine.repository.ShipmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import com.routeoptima.logistics_engine.service.PricingService;
+
 
 import java.util.List;
 
@@ -13,9 +15,16 @@ import java.util.List;
 public class ShipmentController {
 
     private final ShipmentRepository shipmentRepository;
+    private final PricingService pricingService;
 
     @PostMapping
     public Shipment createShipment(@RequestBody Shipment shipment) {
+        Double finalPrice = pricingService.calculatePrice(
+            shipment.getOrigin(), 
+            shipment.getDestination(), 
+            shipment.getBasePrice()
+        );
+        shipment.setBasePrice(finalPrice);
         return shipmentRepository.save(shipment);
     }
 

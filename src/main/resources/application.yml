@@ -16,3 +16,10 @@ spring:
         jdbc:
           time_zone: Asia/Kolkata
         format_sql: true
+  app:
+    api:
+      location-iq-key: ${LOCATION_IQ_KEY}
+      weather-api-key: ${WEATHER_API_KEY}
+    url:
+      weather: https://api.openweathermap.org/data/2.5/weather
+      location-iq: https://us1.locationiq.com/v1/search.php
