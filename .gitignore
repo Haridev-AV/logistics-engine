@@ -1,35 +1,26 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# --- General / OS ---
+.DS_Store
+.env
+.vscode/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# --- Java / Spring Boot (logistics-engine) ---
+logistics-engine/target/
+logistics-engine/.mvn/
+logistics-engine/HELP.md
+logistics-engine/.sts4-cache
+logistics-engine/.classpath
+logistics-engine/.project
+logistics-engine/.settings/
 
-### IntelliJ IDEA ###
-.idea
+# --- Angular (route-optima-web) ---
+route-optima-web/node_modules/
+route-optima-web/dist/
+route-optima-web/.angular/
+route-optima-web/npm-debug.log
+route-optima-web/yarn-error.log
+
+# --- IDE Specific ---
+.idea/
 *.iws
 *.iml
 *.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-.env
