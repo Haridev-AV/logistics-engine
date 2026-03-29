@@ -8,7 +8,7 @@ import com.routeoptima.logistics_engine.service.PricingService;
 
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/shipments")
 @RequiredArgsConstructor

@@ -11,6 +11,7 @@ logistics-engine/.sts4-cache
 logistics-engine/.classpath
 logistics-engine/.project
 logistics-engine/.settings/
+logistics-engine/src/main/resources/application-local.yml
 
 # --- Angular (route-optima-web) ---
 route-optima-web/node_modules/
@@ -24,3 +25,7 @@ route-optima-web/yarn-error.log
 *.iws
 *.iml
 *.ipr
+
+# Node
+node_modules/
+npm-debug.log*

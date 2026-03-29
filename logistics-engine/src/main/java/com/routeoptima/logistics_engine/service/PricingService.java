@@ -9,8 +9,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class PricingService {
     private final WebClient.Builder webClientBuilder;
 
-    @Value("${WEATHER_API_KEY}") private String weatherKey;
-    @Value("${LOCATION_IQ_KEY}") private String locationKey;
+    @Value("${app.api.weather-api-key}") private String weatherKey;
+    @Value("${app.api.location-iq-key}") private String locationKey;
 
     public Double calculatePrice(String origin, String destination, Double baseRate) {
         // 1. Get Distance (Mocked logic for LocationIQ Matrix)
