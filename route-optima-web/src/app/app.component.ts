@@ -1,30 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ShipmentService } from './services/shipment.service';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div style="padding: 20px;">
-      <h1>RouteOptima Dashboard</h1>
-      <ul>
-        <li *ngFor="let s of shipments">
-          {{ s.origin }} to {{ s.destination }}: <strong>₹{{ s.basePrice }}</strong>
-        </li>
-      </ul>
-    </div>
-  `
+  imports: [CommonModule, FormsModule],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   shipments: any[] = [];
+  newShipment = { origin: '', destination: '', basePrice: 0 };
+  private map!: L.Map;
 
-  constructor(private shipmentService: ShipmentService) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.shipmentService.getShipments().subscribe(data => {
-      this.shipments = data;
-    });
+    this.loadShipments();
+  }
+
+  ngAfterViewInit() {
+    this.initMap();
+  }
+
+  private initMap(): void {
+    // Center map on a general view of Europe/Asia
+    this.map = L.map('map', { center: [20, 0], zoom: 3 });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap'
+    }).addTo(this.map);
+  }
+
+  loadShipments() {
+    this.http.get<any[]>('http://localhost:8080/api/shipments')
+      .subscribe(data => this.shipments = data);
+  }
+
+  submitShipment() {
+    this.http.post('http://localhost:8080/api/shipments', this.newShipment)
+      .subscribe(() => {
+        this.loadShipments();
+        this.newShipment = { origin: '', destination: '', basePrice: 0 };
+      });
   }
 }
