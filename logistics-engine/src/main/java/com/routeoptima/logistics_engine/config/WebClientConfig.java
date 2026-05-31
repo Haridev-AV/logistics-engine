@@ -1,5 +1,3 @@
-// src/main/java/com/routeoptima/logistics_engine/config/WebClientConfig.java
-
 package com.routeoptima.logistics_engine.config;
 
 import org.springframework.context.annotation.Bean;
