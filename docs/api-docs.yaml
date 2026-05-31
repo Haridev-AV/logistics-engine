@@ -1,0 +1,171 @@
+openapi: 3.1.0
+info:
+  title: RouteOptima Logistics API
+  description: JWT-secured REST API for shipment and route optimization
+  version: 1.0.0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+security:
+- Bearer Authentication: []
+paths:
+  /api/shipments:
+    get:
+      tags:
+      - shipment-controller
+      operationId: getAllShipments
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Shipment"
+    post:
+      tags:
+      - shipment-controller
+      operationId: createShipment
+      parameters:
+      - name: strategy
+        in: query
+        required: false
+        schema:
+          type: string
+          default: FASTEST
+          enum:
+          - FASTEST
+          - ECONOMIC
+          - SECURE
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Shipment"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ShipmentResponse"
+  /api/auth/signup:
+    post:
+      tags:
+      - auth-controller
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/auth/login:
+    post:
+      tags:
+      - auth-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+  /api/shipments/{id}:
+    get:
+      tags:
+      - shipment-controller
+      operationId: getShipmentById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Shipment"
+components:
+  schemas:
+    Shipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        origin:
+          type: string
+        destination:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - ASSIGNED
+          - IN_TRANSIT
+          - DELIVERED
+          - CANCELLED
+        weight:
+          type: number
+          format: double
+        basePrice:
+          type: number
+          format: double
+        createdAt:
+          type: string
+          format: date-time
+    ShipmentResponse:
+      type: object
+      properties:
+        finalPrice:
+          type: number
+          format: double
+        distanceKm:
+          type: number
+          format: double
+        formattedETA:
+          type: string
+        activeStrategy:
+          type: string
+          enum:
+          - FASTEST
+          - ECONOMIC
+          - SECURE
+    AuthRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+  securitySchemes:
+    Bearer Authentication:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
