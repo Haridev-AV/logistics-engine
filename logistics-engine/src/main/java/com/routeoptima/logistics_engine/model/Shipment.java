@@ -3,6 +3,7 @@ package com.routeoptima.logistics_engine.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "shipments")
@@ -20,7 +21,8 @@ public class Shipment {
     private ShipmentStatus status = ShipmentStatus.PENDING;
 
     private Double weight;
-    private Double basePrice;
+    @Column(name = "base_price", precision = 10, scale = 2)
+    private BigDecimal basePrice;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 }

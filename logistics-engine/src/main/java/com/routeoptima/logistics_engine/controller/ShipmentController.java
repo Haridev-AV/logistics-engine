@@ -29,7 +29,7 @@ public class ShipmentController {
         ShipmentResponse response = pricingService.calculatePrice(
             shipment.getOrigin(),
             shipment.getDestination(),
-            shipment.getBasePrice(), // This is the user's input base rate
+            shipment.getBasePrice().doubleValue(), // This is the user's input base rate
             strategy
         );
 
