@@ -11,13 +11,24 @@ spring:
       connection-init-sql: SET TIME ZONE 'Asia/Kolkata'
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
         jdbc:
           time_zone: Asia/Kolkata
         format_sql: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    url: ${DB_URL}
+    user: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  data:
+    redis:
+      repositories:
+        enabled: false
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
 app:
@@ -27,4 +38,3 @@ app:
   url:
     weather: https://api.openweathermap.org/data/2.5/weather
     location-iq: https://us1.locationiq.com/v1/search.php
-
