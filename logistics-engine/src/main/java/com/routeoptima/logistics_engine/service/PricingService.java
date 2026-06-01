@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.routeoptima.logistics_engine.dto.DistanceResponse;
 import com.routeoptima.logistics_engine.dto.ShipmentResponse;
 import com.routeoptima.logistics_engine.dto.GeocodeResponse;
+import org.springframework.cache.annotation.Cacheable;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,10 @@ public class PricingService {
     @Value("${app.api.weather-api-key}") private String weatherKey;
     @Value("${app.api.location-iq-key}") private String locationKey;
 
+    @Cacheable(
+    value = "routePricing", 
+    key = "#origin.toLowerCase() + '-' + #destination.toLowerCase() + '-' + #strategy.name()"
+    )
     public ShipmentResponse calculatePrice(String origin, String destination, Double baseRate, RoutingStrategy strategy) {
         // Fetch Distance and Duration
         DistanceResponse distanceResponse = fetchDistanceAndDuration(origin, destination, strategy);
@@ -29,6 +34,8 @@ public class PricingService {
 
         // Format ETA
         String formattedETA = formatDuration(durationInSeconds);
+
+        System.out.println("Cache MISS! Executing full calculation for paths...");
 
         return new ShipmentResponse(finalPrice, distanceInKm, formattedETA, strategy);
     }
