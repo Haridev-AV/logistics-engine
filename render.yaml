@@ -2,7 +2,7 @@ services:
   - type: web
     name: route-optima-backend-engine
     runtime: docker
-    repo: https://github.com/harid/routeOptima
+    repo: https://github.com/Haridev-AV/logistics-engine
     plan: starter
     region: oregon 
     envVars:
