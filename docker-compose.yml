@@ -9,3 +9,16 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5433:5432"
+
+  redis:
+    image: redis:alpine
+    container_name: route-optima-cache
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: route-optima-queue
+    ports:
+      - "5672:5672"
+      - "15672:15672"
