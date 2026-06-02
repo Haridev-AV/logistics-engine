@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: route-optima-backend-engine
+    env: docker
+    repo: https://github.com/Haridev-AV/logistics-engine # Replace with your repo link
+    plan: hobby
+    region: oregon 
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: route-optima-prod-db
+          property: connectionString
+      - key: REDIS_URL
+        fromKeyValue:
+          name: route-optima-prod-cache
+          property: connectionString
+      - key: RABBITMQ_URL
+        sync: false # SECURE: You paste this in the Render UI dashboard
+      - key: JWT_SECRET
+        generateValue: true # SECURE: Render generates a cryptographically strong unique secret automatically
+      - key: LOCATIONIQ_API_KEY
+        sync: false # SECURE: You paste this in the Render UI dashboard

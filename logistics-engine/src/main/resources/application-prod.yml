@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    # Render overrides this parameter automatically, but keeping it dynamic is best practice
+    url: ${SPRING_DATASOURCE_URL}
+  
+  data:
+    redis:
+      # Spring expects a clean URL or host/port break down
+      url: ${REDIS_URL}
+      
+  rabbitmq:
+    # Clouds map custom AMQP connection strings
+    addresses: ${RABBITMQ_URL}
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
