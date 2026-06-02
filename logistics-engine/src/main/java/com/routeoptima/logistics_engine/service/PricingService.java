@@ -87,7 +87,7 @@ public class PricingService {
         return 1.2; // Example fallback
     }
 
-    private String formatDuration(long seconds) {
+    String formatDuration(long seconds) {
         long hours = seconds / 3600;
         long minutes = (seconds % 3600) / 60;
         return hours + "H " + minutes + "M";
